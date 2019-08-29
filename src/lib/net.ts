@@ -142,7 +142,6 @@ export class Readable<T extends ReadableStream> {
 
     once(event: "close" | "end" | "error"): Promise<void>
     once(event: "open"): Promise<number>
-
     once(event: string): Promise<void | number> {
         const stream = this.stream
 
@@ -400,7 +399,6 @@ export class Writable<T extends WritableStream> {
     once(event: "close" | "error" | "finish"): Promise<void>
     once(event: "open"): Promise<number>
     once(event: "pipe" | "unpipe"): Promise<NodeJS.ReadableStream>
-
     once(event: string): Promise<void | number | NodeJS.ReadableStream> {
         const stream = this.stream
 
