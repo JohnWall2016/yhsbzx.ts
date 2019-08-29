@@ -674,8 +674,8 @@ export class Duplex<T extends DuplexStream> extends Readable<T> {
 }
 
 export class TimeoutError extends Error {
-    constructor() {
-        super("Timeout")
+    constructor(private duration?: number) {
+        super("Timeout" + (duration ? ` in ${duration}ms` : ''))
     }
 }
 
@@ -738,7 +738,7 @@ export class Socket<T extends net.Socket> extends Duplex<T> {
             if (!this.timeoutHandler) {
                 this.timeoutHandler = () => {
                     this.timeoutHandler = undefined
-                    socket.destroy(new TimeoutError())
+                    socket.destroy(new TimeoutError(timeout))
                 }
                 socket.once("timeout", this.timeoutHandler)
             }
