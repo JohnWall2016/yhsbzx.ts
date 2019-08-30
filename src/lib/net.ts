@@ -156,13 +156,13 @@ export class Readable<T extends ReadableStream> {
                 if (event === "close") {
                     return resolve()
                 } else {
-                    return reject(new Error(`once ${event} after close`))
+                    return reject(new Error(`once ${ event } after close`))
                 }
             } else if (stream.destroyed) {
                 if (event === "close" || event === "end") {
                     return resolve()
                 } else {
-                    return reject(new Error(`once ${event} after destroy`))
+                    return reject(new Error(`once ${ event } after destroy`))
                 }
             }
 
@@ -415,13 +415,13 @@ export class Writable<T extends WritableStream> {
                 if (event === "close") {
                     return resolve()
                 } else {
-                    return reject(new Error(`once ${event} after close`))
+                    return reject(new Error(`once ${ event } after close`))
                 }
             } else if (stream.destroyed) {
                 if (event === "close" || event === "finish") {
                     return resolve()
                 } else {
-                    return reject(new Error(`once ${event} after destroy`))
+                    return reject(new Error(`once ${ event } after destroy`))
                 }
             }
 
@@ -587,7 +587,7 @@ export class Duplex<T extends DuplexStream> extends Readable<T> {
                 if (event === "close") {
                     return resolve()
                 } else {
-                    return reject(new Error(`once ${event} after close`))
+                    return reject(new Error(`once ${ event } after close`))
                 }
             }
 
@@ -595,7 +595,7 @@ export class Duplex<T extends DuplexStream> extends Readable<T> {
                 if (event === "close" || event === "end" || event === "finish") {
                     return resolve()
                 } else {
-                    return reject(new Error(`once ${event} after destroy`))
+                    return reject(new Error(`once ${ event } after destroy`))
                 }
             }
 
@@ -675,14 +675,14 @@ export class Duplex<T extends DuplexStream> extends Readable<T> {
 
 export class TimeoutError extends Error {
     constructor(private duration?: number) {
-        super("Timeout" + (duration ? ` in ${duration}ms` : ''))
+        super("Timeout" + (duration ? ` in ${ duration }ms` : ''))
     }
 }
 
-export class Socket<T extends net.Socket> extends Duplex<T> {
+export class Socket extends Duplex<net.Socket> {
     private timeoutHandler?: () => void
 
-    constructor(readonly socket: T = new net.Socket() as T) {
+    constructor(readonly socket = new net.Socket()) {
         super(socket)
     }
 
@@ -745,5 +745,21 @@ export class Socket<T extends net.Socket> extends Duplex<T> {
         }
 
         socket.setTimeout(timeout)
+    }
+}
+
+export class HttpSocket extends Socket {
+    private constructor(readonly host: string, readonly port: number, readonly encoding = 'utf8') {
+        super()
+    }
+
+    static async connect(host: string, port: number) {
+        let socket = new HttpSocket(host, port)
+        await socket.connect(port, host)
+        return socket
+    }
+
+    async readByte() {
+        const buf = await this.read(1)
     }
 }
