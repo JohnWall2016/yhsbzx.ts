@@ -4,7 +4,6 @@ import * as net from 'net'
 interface ReadableStream extends NodeJS.ReadableStream {
     closed?: boolean
     destroyed?: boolean
-
     destroy?(): void
 }
 
@@ -235,10 +234,8 @@ interface WritableStream extends NodeJS.WritableStream {
     bytesWritten?: number
     closed?: boolean
     destroyed?: boolean
-
     cork?(): void
     uncork?(): void
-
     destroy?(): void
 }
 
@@ -745,21 +742,5 @@ export class Socket extends Duplex<net.Socket> {
         }
 
         socket.setTimeout(timeout)
-    }
-}
-
-export class HttpSocket extends Socket {
-    private constructor(readonly host: string, readonly port: number, readonly encoding = 'utf8') {
-        super()
-    }
-
-    static async connect(host: string, port: number) {
-        let socket = new HttpSocket(host, port)
-        await socket.connect(port, host)
-        return socket
-    }
-
-    async readByte() {
-        const buf = await this.read(1)
     }
 }
