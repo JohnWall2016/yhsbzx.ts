@@ -8,8 +8,8 @@ export class HttpSocket {
         this._socket = new Socket()
     }
 
-    static async connect(host: string, port: number, timeout: number = 5000) {
-        let socket = new HttpSocket(host, port)
+    static async connect(host: string, port: number, encoding = 'utf8', timeout: number = 5000) {
+        let socket = new HttpSocket(host, port, encoding)
         socket._socket.setTimeout(timeout)
         await socket._socket.connect(port, host)
         return socket

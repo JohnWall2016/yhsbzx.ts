@@ -42,7 +42,7 @@ function testRequest() {
 }
 
 async function testHttp() {
-    const http = await HttpSocket.connect('39.156.69.79', 80) // '124.228.42.248' '104.20.23.46'
+    const http = await HttpSocket.connect('39.156.69.79', 80, /*'gbk'*/) // '124.228.42.248' '104.20.23.46'
     console.log(await http.fetch('/index.html'))
     await http.end()
 }
