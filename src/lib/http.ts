@@ -23,7 +23,7 @@ export class HttpSocket {
         const buf = await this._socket.read(size)
         if (buf !== undefined) {
             if (typeof buf === 'string') {
-                return Buffer.from(buf, this.encoding as BufferEncoding)
+                return Buffer.from(buf, 'utf8')
             } else {
                 return buf
             }
@@ -194,7 +194,7 @@ export class HttpRequest {
     private _header: HttpHeader = new HttpHeader()
     private _body: GBuffer = new GBuffer()
 
-    constructor(readonly path: string, private _method: string = 'GET', private _encoding: BufferEncoding = 'utf8', header?: HttpHeader) {
+    constructor(readonly path: string, private _method: string = 'GET', private _encoding: 'utf8' = 'utf8', header?: HttpHeader) {
         if (header !== undefined) {
             this._header.addAll(header.entries)
         }
