@@ -42,8 +42,10 @@ function testRequest() {
 }
 
 async function testHttp() {
-    const http = await HttpSocket.connect('39.156.69.79', 80, /*'gbk'*/) // '124.228.42.248' '104.20.23.46'
-    console.log(await http.fetch('/index.html'))
+    //const http = await HttpSocket.connect('39.156.69.79', 80, /*'gbk'*/) // '124.228.42.248' '104.20.23.46'
+    //console.log(await http.fetch('/index.html'))
+    const http = await HttpSocket.connect('10.136.6.99', 7010)
+    console.log(await http.fetch('/hncjb/pages/html/index.html'))
     await http.end()
 }
 
