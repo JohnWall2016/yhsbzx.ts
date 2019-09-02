@@ -1,1 +1,1 @@
-import { JsonProperty as Json } from 'typescript-json-serializer'
+export { JsonProperty as Json, Serializable, serialize, deserialize } from 'typescript-json-serializer'
