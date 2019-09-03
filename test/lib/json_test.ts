@@ -1,22 +1,23 @@
-import { Json, Jsonable, toJson, fromJson } from '../../dist/lib/json'
+/*import { toJson, fromJson } from '../../dist/lib/json'
+import 'reflect-metadata/Reflect'
 
 class Job {
     constructor(
         @Json('abc003') public company: string,
         @Json('abc004') public position: string
-    ) {}
+    ) { }
 }
 
-type Sex = '男'|'女'
+type Sex = '男' | '女'
 
 @Jsonable()
 class Human {
     constructor(
         @Json() public sex: Sex
-    ) {}
+    ) { }
 }
 
-@Jsonable('Human')
+@Jsonable()
 class Person extends Human {
     @Json('abc002')
     name: string
@@ -31,7 +32,7 @@ class Person extends Human {
     }
 }
 
-@Jsonable('Person')
+@Jsonable()
 class Worker extends Person {
     @Json()
     job: Job
@@ -41,6 +42,8 @@ class Worker extends Person {
         this.job = new Job(params.company, params.position)
     }
 }
-
+*/
+/*
 let worker = new Worker({name: 'Bonde', age: 34, sex: '男', company: 'AIC', position: 'COO'})
 console.log(toJson(worker))
+*/
