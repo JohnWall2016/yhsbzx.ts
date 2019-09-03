@@ -7,40 +7,40 @@ class Job {
     ) {}
 }
 
+type Sex = '男'|'女'
+
 @Jsonable()
-class Male {
-    @Json()
-    sex: string = '男'
+class Human {
+    constructor(
+        @Json() public sex: Sex
+    ) {}
 }
 
-class Person extends Male {
-    @Json('abc001')
-    id: string
-
+@Jsonable('Human')
+class Person extends Human {
     @Json('abc002')
     name: string
 
     @Json()
-    job: Job
-
-    @Json()
     age: number
 
-    constructor(id: string, name: string, age: number) {
-        super()
-        this.id = id
+    constructor(name: string, age: number, sex: Sex) {
+        super(sex)
         this.name = name
         this.age = age
-        this.job = new Job('abc', 'CTO')
     }
 }
 
-const str = toJson(new Person('007', 'Bonde', 32))
-console.log(typeof str)
-console.log(str)
+@Jsonable('Person')
+class Worker extends Person {
+    @Json()
+    job: Job
 
-let test = fromJson(str, Person)
-console.log(test)
+    constructor(params: { name: string, age: number, sex: Sex, company: string, position: string }) {
+        super(params.name, params.age, params.sex)
+        this.job = new Job(params.company, params.position)
+    }
+}
 
-test = fromJson('{"abc001":"008","abc002":"Bonde2","job":{"company":"abcd","position":"COO"},"age":33,"sex":"女"}', Person)
-console.log(test)
+let worker = new Worker({name: 'Bonde', age: 34, sex: '男', company: 'AIC', position: 'COO'})
+console.log(toJson(worker))
